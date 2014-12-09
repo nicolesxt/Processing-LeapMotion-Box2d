@@ -11,6 +11,8 @@ import de.voidplus.leapmotion.*;
 
 LeapMotion leap;
 
+PImage open, live, die;
+Vec2 Aka_Live;
 
 //call the Aka class
 ArrayList<Aka> akachan;
@@ -50,6 +52,7 @@ void setup(){
   hand_pitchL = 0;
   hand_pitchR = 0;
   
+  Aka_Live = new Vec2();
   
   box2d.setGravity(0,-40);
   
@@ -62,12 +65,16 @@ void setup(){
   obstacle1 = new Obstacles(30*sqrt(3),height-160, 120, 10, true, -PI/6);
   obstacle2 = new Obstacles(width,height-140,40,5,true,PI/2);
   obstacle3 = new Obstacles(width-50,height-80,50,10,true,-PI/8);
+  
+  open = loadImage("003.jpg");
+  live = loadImage("live.jpg");
+  die = loadImage("die.jpg");
+  
 }
 
 void draw(){
   background(255);
   box2d.step();
-
   for(Hand hand : leap.getHands()){
     PVector hand_position    = hand.getStabilizedPosition();
     x1 = hand_position.x;
@@ -94,7 +101,11 @@ void draw(){
   obstacle2.display();
   obstacle3.display();
   
+  LiveOrDie();
+  
+  
   //waterfall
+  if(millis()>4500){
   for(Water b1: water){
     b1.display();
   }
@@ -104,9 +115,8 @@ void draw(){
     Water b1 = water.get(i);
     if(b1.done()){
       water.remove(i);
-      //Water p2 = new Water(width*2/3,0);
-      //water.add(p1);
     }
+  }
   }
   
   //aka
@@ -114,7 +124,7 @@ void draw(){
     b.display();
   }
   //generate aka
-  if(millis()>3000 && millis()<3020){
+  if(millis()>4500 && millis()<4520){
   Aka p = new Aka(50,0);
   akachan.add(p);
   }
@@ -128,4 +138,17 @@ void draw(){
     }
   }
 
+}
+
+
+void LiveOrDie(){
+  println(millis());
+  if(millis()<4500){
+    image(open,0,0, width, height);
+  }
+  println(Aka_Live);
+  if(Aka_Live.x>width-20 && Aka_Live.x<width && Aka_Live.y>height-80 && Aka_Live.y<height-40){
+    image(live,0,random(5,5),width, height);
+  }
+  
 }

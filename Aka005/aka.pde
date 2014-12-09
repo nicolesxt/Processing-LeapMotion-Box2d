@@ -26,9 +26,9 @@ class Aka{
   FixtureDef fd = new FixtureDef();
   fd.shape = sd;
   
-  fd.density = 0.1;
+  fd.density = 0.05;
   fd.friction = 0;
-  fd.restitution = 0.6;
+  fd.restitution = 0.3;
   
   //attach fixture to body
   body.createFixture(fd);
@@ -47,8 +47,6 @@ class Aka{
     rectMode(CENTER);
     ellipse(0,0,w,h);
     popMatrix();
-    
-    Aka_Live = box2d.getBodyPixelCoord(body);
   }
   
 boolean done() {

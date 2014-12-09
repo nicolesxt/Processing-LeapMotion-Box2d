@@ -47,6 +47,8 @@ class Aka{
     rectMode(CENTER);
     ellipse(0,0,w,h);
     popMatrix();
+    
+    Aka_Live = box2d.getBodyPixelCoord(body);
   }
   
 boolean done() {

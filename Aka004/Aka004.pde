@@ -10,7 +10,7 @@ import org.jbox2d.dynamics.contacts.*;
 import de.voidplus.leapmotion.*;
 
 LeapMotion leap;
-
+PImage open, live, die;
 
 //call the Aka class
 ArrayList<Aka> akachan;
@@ -81,6 +81,11 @@ void setup(){
   wall1 = new Wall(width/2-80, height);
   wall2 = new Wall(width/2+80, height);
   box = new Box(width/2, height, 160, 3, true);
+  
+  open = loadImage("004.jpg");
+  live = loadImage("live.jpg");
+  die = loadImage("die.jpg");
+  
 }
 
 void draw(){
@@ -171,7 +176,7 @@ void draw(){
     b.display();
   }
   //generate aka
-  if(millis()>3000 && millis()<3020){
+  if(millis()>3500 && millis()<3520){
   Aka p = new Aka(120,0);
   akachan.add(p);
   }
@@ -184,4 +189,9 @@ void draw(){
       akachan.add(p);
     }
   }
+  
+  if(millis()<3400){
+    image(open,0,0, width, height);
+  }
+  
 }

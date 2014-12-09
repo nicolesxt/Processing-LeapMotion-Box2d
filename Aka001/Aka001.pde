@@ -11,6 +11,9 @@ import de.voidplus.leapmotion.*;
 
 LeapMotion leap;
 
+PImage open, live, die;
+Vec2 Aka_Live;
+
 
 //call the Aka class
 ArrayList<Aka> akachan;
@@ -34,7 +37,7 @@ float hand_pitchL;
 float hand_pitchR;
 
 void setup(){
-  size(1000,800, P2D);
+  size(800,600, P2D);
   smooth();
   
   leap = new LeapMotion(this);
@@ -48,6 +51,7 @@ void setup(){
   hand_pitchL = 0;
   hand_pitchR = 0;
   
+  Aka_Live = new Vec2();
   
   box2d.setGravity(0,-100);
   
@@ -56,6 +60,11 @@ void setup(){
   wall1 = new Wall(width-30, height);
   wall2 = new Wall(width, height);
   box = new Box(width-15, height, 30, 2, true);
+  
+  //images
+  open = loadImage("001.jpg");
+  live = loadImage("live.jpg");
+  die = loadImage("die.jpg");
 }
 
 void draw(){
@@ -95,7 +104,7 @@ void draw(){
   }
   //generate aka
   if(millis()>3000 && millis()<3020){
-  Aka p = new Aka(50,0);
+  Aka p = new Aka(100,0);
   akachan.add(p);
   }
   //delete aka and generate a new one each time
@@ -103,8 +112,23 @@ void draw(){
     Aka b = akachan.get(i);
     if (b.done()) {
       akachan.remove(i);
-      Aka p = new Aka(random(25, 70), 0);
+      Aka p = new Aka(100, 0);
       akachan.add(p);
     }
   }
+  
+  LiveOrDie();
+  
+}
+
+void LiveOrDie(){
+  println(millis());
+  if(millis()<2500){
+    image(open,0,0, width, height);
+  }
+  
+  if(Aka_Live.x>width-40 && Aka_Live.x<width && Aka_Live.y>height-20 && Aka_Live.y<height){
+    image(live,0,random(5,5),width, height);
+  }
+  
 }

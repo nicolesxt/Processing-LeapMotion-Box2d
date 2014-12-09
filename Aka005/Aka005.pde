@@ -6,12 +6,13 @@ import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
 import org.jbox2d.dynamics.contacts.*;
+
 import de.voidplus.leapmotion.*;
 
 LeapMotion leap;
 
 PImage open, live, die;
-Vec2 Aka_Live;
+
 
 //call the Aka class
 ArrayList<Aka> akachan;
@@ -19,11 +20,12 @@ ArrayList<Aka> akachan;
 //create the Box2D world
 Box2DProcessing box2d;
 
-Obstacles obstacle1;
-float w, h, r;
-MovingBar01 movingbar01;
-MovingBar02 movingbar02;
-Wall wall1, wall2, wall3;
+  ArrayList<Water> water;
+  Obstacles obstacle1, obstacle2, obstacle3, obstacle4;
+  Obstacles obstacle5, obstacle6, obstacle7, obstacle8;
+  //MovingBar03 movingbar03;
+  MovingBar04 movingbar04;
+  float newX1a;
 
 //for hand
 float mx, my;
@@ -36,7 +38,7 @@ float hand_pitchL;
 float hand_pitchR;
 
 void setup(){
-  size(600, 500, P3D);
+  size(600, 500, P2D);
   smooth();
   
   leap = new LeapMotion(this);
@@ -51,27 +53,26 @@ void setup(){
   hand_pitchR = 0;
   
   
-  box2d.setGravity(0,-100);
+  box2d.setGravity(0,-40);
   
-  w = 200;
-  h = 10;
-  r = -PI/8;
+  newX1a = map(x1a, 0,500,150,height-50);
+  
   akachan = new ArrayList<Aka>();
-  
-  //joints of the obstacle
-  obstacle1 = new Obstacles(w*sqrt(3)/4, height-60, w, h, true,r);
-  
-  movingbar01 = new MovingBar01(width*3/4, height-50, true, hand_pitchR);
-  movingbar02 = new MovingBar02(width/2, y1a, true, 0);
-  
-  wall1 = new Wall(width/2-40,-100);
-  wall2 = new Wall(width/2+40,-120);
-  wall3 = new Wall(width*3/4, height+200);
-  
-  //images
-  open = loadImage("002.jpg");
+  water = new ArrayList<Water>();
+  //movingbar03 = new MovingBar03(newX1a,100,true,0);
+  movingbar04 = new MovingBar04(width*2/3, 100, true, hand_pitchR);
+  //two moving bars
+  obstacle1 = new Obstacles(80, height-30, 60,10, true, PI/2);
+  obstacle2 = new Obstacles(150, height-30, 10,10, true, PI/2);
+  obstacle3 = new Obstacles(width/2-20,height-60,150,10,true,-PI/12);
+  obstacle4 = new Obstacles(width-90,height-26, 80,10,true,0);
+  obstacle5 = new Obstacles(115, height-50, 0.3, 10, true, 0);
+  obstacle6 = new Obstacles(width, height-26, 50, 10, true, PI/2);
+
+  open = loadImage("005.jpg");
   live = loadImage("live.jpg");
   die = loadImage("die.jpg");
+
 }
 
 void draw(){
@@ -98,23 +99,37 @@ void draw(){
     }
 
   }
-  //wall
-  wall1.display();
-  wall2.display();
-  wall3.display();
-  //obstacle1
+  //movingbar03.display();
+  movingbar04.display();
   obstacle1.display();
-  //bar
-  movingbar01.display();
-  movingbar02.display();
+  obstacle2.display();
+  obstacle3.display();
+  obstacle4.display();
+  obstacle5.display();
+  obstacle6.display();
+  
+  //waterfall
+  for(Water b1: water){
+    b1.display();
+  }
+  Water p1 = new Water(width*2/3,0);
+  water.add(p1);
+  for(int i = water.size()-1; i>=0; i--){
+    Water b1 = water.get(i);
+    if(b1.done()){
+      water.remove(i);
+      //Water p2 = new Water(width*2/3,0);
+      //water.add(p1);
+    }
+  }
   
   //aka
   for(Aka b: akachan){
     b.display();
   }
   //generate aka
-  if(millis()>3500 && millis()<3520){
-  Aka p = new Aka(50,0);
+  if(millis()>3400 && millis()<3420){
+  Aka p = new Aka(100,0);
   akachan.add(p);
   }
   //delete aka and generate a new one each time
@@ -122,13 +137,13 @@ void draw(){
     Aka b = akachan.get(i);
     if (b.done()) {
       akachan.remove(i);
-      Aka p = new Aka(random(25, 70), 0);
+      Aka p = new Aka(100, 0);
       akachan.add(p);
     }
   }
-  
-  if(millis()<3500){
+
+  if(millis()<3400){
     image(open,0,0, width, height);
   }
-  
+
 }
