@@ -15,3 +15,8 @@ https://github.com/shiffman/Box2D-for-Processing
 
 
 Welcome for any suggestions and modifications.
+
+Contact:
+
+Nico XinTong Shi
+123sxtnicole@gmail.com
