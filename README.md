@@ -1,6 +1,12 @@
 Processing-LeapMotion-Box2d
 ===========================
 
+
+Check out this awesome video of this game:
+https://www.youtube.com/watch?v=WQi7eaPdt20
+
+
+
 A game made in Processing with leap motion and box2d
 
 Please open it with a leap motion connected on your laptop.
